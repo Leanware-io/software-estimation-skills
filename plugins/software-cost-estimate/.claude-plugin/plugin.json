@@ -1,0 +1,19 @@
+{
+  "name": "software-cost-estimate",
+  "version": "1.0.0",
+  "description": "Turns a requirements document into a first-principles, bottom-up software cost estimate: work items, days per discipline, capacity check and a formula-driven spreadsheet.",
+  "author": {
+    "name": "Leanware",
+    "url": "https://leanware.co"
+  },
+  "homepage": "https://leanware.co/services/software-product-development#claude-skills",
+  "repository": "https://github.com/Leanware-io/software-estimation-skills",
+  "license": "MIT",
+  "keywords": [
+    "estimation",
+    "software-development",
+    "cost",
+    "project-planning",
+    "spreadsheet"
+  ]
+}

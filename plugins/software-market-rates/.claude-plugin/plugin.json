@@ -1,0 +1,19 @@
+{
+  "name": "software-market-rates",
+  "version": "1.0.0",
+  "description": "Builds a sourced, dated table of software developer rates by role, seniority and country, and a blended rate for a proposed team.",
+  "author": {
+    "name": "Leanware",
+    "url": "https://leanware.co"
+  },
+  "homepage": "https://leanware.co/services/dedicated-development-team#claude-skills",
+  "repository": "https://github.com/Leanware-io/software-estimation-skills",
+  "license": "MIT",
+  "keywords": [
+    "rates",
+    "software-development",
+    "estimation",
+    "outsourcing",
+    "nearshore"
+  ]
+}

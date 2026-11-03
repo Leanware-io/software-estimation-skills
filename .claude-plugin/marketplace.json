@@ -1,0 +1,31 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "software-estimation-skills",
+  "description": "Three Claude skills that estimate what custom software costs to build: sourced market rates, a first-principles bottom-up estimate, and a per-task AI savings pass.",
+  "owner": {
+    "name": "Leanware"
+  },
+  "plugins": [
+    {
+      "name": "software-market-rates",
+      "description": "Builds a sourced, dated table of software developer rates by role, seniority and country, and a blended rate for a proposed team.",
+      "source": "./plugins/software-market-rates",
+      "category": "productivity",
+      "homepage": "https://leanware.co/services/dedicated-development-team#claude-skills"
+    },
+    {
+      "name": "software-cost-estimate",
+      "description": "Turns a requirements document into a first-principles, bottom-up software cost estimate: work items, days per discipline, capacity check and a formula-driven spreadsheet.",
+      "source": "./plugins/software-cost-estimate",
+      "category": "productivity",
+      "homepage": "https://leanware.co/services/software-product-development#claude-skills"
+    },
+    {
+      "name": "ai-savings-pass",
+      "description": "Applies a per-task AI savings pass to a software estimate: splits items into activities, scores how delegable each one is, and returns the total without AI and with AI.",
+      "source": "./plugins/ai-savings-pass",
+      "category": "productivity",
+      "homepage": "https://leanware.co/services/software-product-development#claude-skills"
+    }
+  ]
+}

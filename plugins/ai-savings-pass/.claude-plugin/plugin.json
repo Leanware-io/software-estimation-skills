@@ -1,0 +1,19 @@
+{
+  "name": "ai-savings-pass",
+  "version": "1.0.0",
+  "description": "Applies a per-task AI savings pass to a software estimate: splits items into activities, scores how delegable each one is, and returns the total without AI and with AI.",
+  "author": {
+    "name": "Leanware",
+    "url": "https://leanware.co"
+  },
+  "homepage": "https://leanware.co/services/software-product-development#claude-skills",
+  "repository": "https://github.com/Leanware-io/software-estimation-skills",
+  "license": "MIT",
+  "keywords": [
+    "ai-productivity",
+    "estimation",
+    "software-development",
+    "cost",
+    "agentic-coding"
+  ]
+}

@@ -1,0 +1,711 @@
+{
+  "name": "Per-task AI savings for software estimates",
+  "version": "2026-10",
+  "dated": "2026-10-28",
+  "redate_by": "2027-04-28",
+  "stale_after": "2027-10-28",
+  "basis": "Leanware's planning figures for a senior team that uses agentic coding tools (Claude Code, Codex, Cursor, Copilot) every day, derived from a review of published studies dated to 2026-10-28. Every percentage is an inference, not a measured result; typical teams in the studies save less. 'aggressive' is the saving applied when an item is easy to hand to AI; 'floor' is where it falls when it is not (the conservative column of the research). 'expected_reference' is the research's middle column, kept for reference and not applied.",
+  "formula": "D = weighted attribute score / (2 x sum of weights) = weighted sum / 30; saving = floor + (aggressive - floor) x D; then gates; never above aggressive; never below min(0, floor).",
+  "activities": [
+    {
+      "id": "setup_scaffolding",
+      "row": 1,
+      "label": "Project setup, scaffolding and CI/CD bootstrap",
+      "aggressive": 0.75,
+      "floor": 0.35,
+      "expected_reference": 0.55,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Stack and repo-layout decisions, house conventions, cloud accounts and secrets, approving the production pipeline"
+    },
+    {
+      "id": "crud_business_logic",
+      "row": 2,
+      "label": "CRUD screens and standard business logic",
+      "aggressive": 0.55,
+      "floor": 0.2,
+      "expected_reference": 0.35,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Settling ambiguous business rules and edge cases, permission and data-integrity decisions, client acceptance"
+    },
+    {
+      "id": "ui_from_design_system",
+      "row": 3,
+      "label": "UI built from an existing design system",
+      "aggressive": 0.6,
+      "floor": 0.25,
+      "expected_reference": 0.4,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Visual QA across browsers and screen sizes, accessibility review, interaction polish, fidelity to design intent"
+    },
+    {
+      "id": "documented_api_integration",
+      "row": 4,
+      "label": "Integrations with documented APIs",
+      "aggressive": 0.5,
+      "floor": 0.2,
+      "expected_reference": 0.35,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Sandbox and credential access, auth flows, webhook ordering and idempotency, vendor quirks, reconciliation edge cases"
+    },
+    {
+      "id": "legacy_integration",
+      "row": 5,
+      "label": "Integrations with legacy or undocumented systems",
+      "aggressive": 0.25,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Discovering undocumented behavior, test-environment access, knowledge held by client staff, side effects on systems of record"
+    },
+    {
+      "id": "data_modeling",
+      "row": 6,
+      "label": "Data modeling and database migrations",
+      "aggressive": 0.35,
+      "floor": 0.1,
+      "expected_reference": 0.2,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Normalization, tenancy and ownership decisions, backfill and rollback strategy, live-data safety"
+    },
+    {
+      "id": "ai_features",
+      "row": 7,
+      "label": "AI features (retrieval, prompts, evaluations, guardrails)",
+      "aggressive": 0.35,
+      "floor": 0.1,
+      "expected_reference": 0.2,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Defining success criteria, reading real outputs, labeling, re-running evaluations on every model or prompt change, safety sign-off"
+    },
+    {
+      "id": "debugging",
+      "row": 8,
+      "label": "Debugging and bug fixing",
+      "aggressive": 0.45,
+      "floor": 0.1,
+      "expected_reference": 0.25,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Reproducing the bug, production access and logs, root-cause judgment across systems, proving no regression"
+    },
+    {
+      "id": "refactoring_migrations",
+      "row": 9,
+      "label": "Refactoring and large mechanical migrations",
+      "aggressive": 0.65,
+      "floor": 0.2,
+      "expected_reference": 0.4,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Choosing the target design, building the validation harness, the long tail of edge cases, rollout and equivalence sign-off"
+    },
+    {
+      "id": "test_automation",
+      "row": 10,
+      "label": "Automated test generation and test automation",
+      "aggressive": 0.7,
+      "floor": 0.3,
+      "expected_reference": 0.5,
+      "code_producing": true,
+      "typical_discipline": "qa",
+      "what_ai_does_not_save": "Deciding which behavior matters and what correct looks like, flaky-test triage, test data and environments, owning the suite"
+    },
+    {
+      "id": "manual_qa",
+      "row": 11,
+      "label": "Manual and exploratory QA",
+      "aggressive": 0.3,
+      "floor": 0.05,
+      "expected_reference": 0.15,
+      "code_producing": false,
+      "typical_discipline": "qa",
+      "what_ai_does_not_save": "Noticing what feels wrong, usability, unspecified behavior, go or no-go decisions, checking AI-written test cases are real"
+    },
+    {
+      "id": "documentation",
+      "row": 12,
+      "label": "Code documentation and technical writing",
+      "aggressive": 0.65,
+      "floor": 0.25,
+      "expected_reference": 0.45,
+      "code_producing": false,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Deciding what to document and for whom, rationale that is not in the code, factual accuracy, editorial review"
+    },
+    {
+      "id": "code_review",
+      "row": 13,
+      "label": "Code review",
+      "aggressive": 0.2,
+      "floor": -0.2,
+      "expected_reference": 0.0,
+      "code_producing": false,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Judging design fit and whether the change should exist, business context, approval accountability; AI produces more and larger changes to review"
+    },
+    {
+      "id": "security_compliance",
+      "row": 14,
+      "label": "Security and compliance",
+      "aggressive": 0.3,
+      "floor": 0.05,
+      "expected_reference": 0.15,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Risk judgment, proving a patch keeps behavior intact, attack chains in business logic, security review of AI-written code, attestation"
+    },
+    {
+      "id": "devops_infrastructure",
+      "row": 15,
+      "label": "DevOps and infrastructure",
+      "aggressive": 0.35,
+      "floor": 0.1,
+      "expected_reference": 0.2,
+      "code_producing": true,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Network and permission design, production change approval and rollback, environment failures outside the model's view"
+    },
+    {
+      "id": "ui_ux_design",
+      "row": 16,
+      "label": "UI/UX design",
+      "aggressive": 0.35,
+      "floor": 0.1,
+      "expected_reference": 0.2,
+      "code_producing": false,
+      "typical_discipline": "design",
+      "what_ai_does_not_save": "Research with real users, design judgment, production visual polish, design review"
+    },
+    {
+      "id": "requirements_discovery",
+      "row": 17,
+      "label": "Requirements and discovery",
+      "aggressive": 0.45,
+      "floor": 0.15,
+      "expected_reference": 0.3,
+      "code_producing": false,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Getting the truth from real stakeholders, prioritization trade-offs, sign-off"
+    },
+    {
+      "id": "domain_understanding",
+      "row": 18,
+      "label": "Business domain understanding",
+      "aggressive": 0.25,
+      "floor": 0.05,
+      "expected_reference": 0.15,
+      "code_producing": false,
+      "typical_discipline": "engineering",
+      "what_ai_does_not_save": "Unwritten rules, exceptions and politics, why a process exists, who actually decides"
+    },
+    {
+      "id": "delivery_pm",
+      "row": 19,
+      "label": "Delivery and project management",
+      "aggressive": 0.3,
+      "floor": 0.1,
+      "expected_reference": 0.2,
+      "code_producing": false,
+      "typical_discipline": "delivery",
+      "what_ai_does_not_save": "Coordination and unblocking, sequencing and escalation decisions, risk judgment"
+    },
+    {
+      "id": "client_communication",
+      "row": 20,
+      "label": "Client communication and stakeholder management",
+      "aggressive": 0.2,
+      "floor": 0.05,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "delivery",
+      "what_ai_does_not_save": "Live conversations, scope and price negotiation, expectation-setting, trust"
+    }
+  ],
+  "subrows": [
+    {
+      "id": "schema_migration_code",
+      "parent": "data_modeling",
+      "label": "Schema, migration and ORM code for a decided design",
+      "aggressive": 0.5,
+      "floor": 0.2,
+      "expected_reference": 0.35,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "modeling_decisions_live_migration",
+      "parent": "data_modeling",
+      "label": "Modeling decisions and live-data migration",
+      "aggressive": 0.15,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "ai_feature_code",
+      "parent": "ai_features",
+      "label": "AI feature code (retrieval, tool schemas, eval harness and judge code)",
+      "aggressive": 0.5,
+      "floor": 0.25,
+      "expected_reference": 0.4,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "ai_eval_design",
+      "parent": "ai_features",
+      "label": "AI eval design, error analysis, guardrail policy",
+      "aggressive": 0.2,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "debugging_reproducible",
+      "parent": "debugging",
+      "label": "Reproducible bug with a failing test, popular stack",
+      "aggressive": 0.6,
+      "floor": 0.2,
+      "expected_reference": 0.4,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "debugging_production",
+      "parent": "debugging",
+      "label": "Intermittent, production, cross-system or legacy bug",
+      "aggressive": 0.2,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "local_refactors",
+      "parent": "refactoring_migrations",
+      "label": "Local refactors",
+      "aggressive": 0.5,
+      "floor": 0.15,
+      "expected_reference": 0.3,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "mechanical_migration",
+      "parent": "refactoring_migrations",
+      "label": "Large mechanical, test-verifiable migration with a validation pipeline",
+      "aggressive": 0.85,
+      "floor": 0.4,
+      "expected_reference": 0.6,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "unit_tests",
+      "parent": "test_automation",
+      "label": "Unit tests for well-specified code",
+      "aggressive": 0.7,
+      "floor": 0.4,
+      "expected_reference": 0.55,
+      "code_producing": true,
+      "typical_discipline": "qa"
+    },
+    {
+      "id": "integration_e2e_tests",
+      "parent": "test_automation",
+      "label": "Integration and end-to-end tests",
+      "aggressive": 0.5,
+      "floor": 0.15,
+      "expected_reference": 0.3,
+      "code_producing": true,
+      "typical_discipline": "qa"
+    },
+    {
+      "id": "mechanical_test_migration",
+      "parent": "test_automation",
+      "label": "Mechanical test migration or coverage backfill",
+      "aggressive": 0.9,
+      "floor": 0.5,
+      "expected_reference": 0.75,
+      "code_producing": true,
+      "typical_discipline": "qa"
+    },
+    {
+      "id": "qa_test_cases",
+      "parent": "manual_qa",
+      "label": "Test cases, plans, charters",
+      "aggressive": 0.7,
+      "floor": 0.3,
+      "expected_reference": 0.5,
+      "code_producing": false,
+      "typical_discipline": "qa"
+    },
+    {
+      "id": "qa_exploratory_signoff",
+      "parent": "manual_qa",
+      "label": "Exploratory sessions and release sign-off",
+      "aggressive": 0.2,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "qa"
+    },
+    {
+      "id": "docs_code_api",
+      "parent": "documentation",
+      "label": "Comments, docstrings, API reference",
+      "aggressive": 0.75,
+      "floor": 0.4,
+      "expected_reference": 0.6,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "docs_readme_runbooks",
+      "parent": "documentation",
+      "label": "READMEs, runbooks, onboarding",
+      "aggressive": 0.55,
+      "floor": 0.25,
+      "expected_reference": 0.4,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "docs_architecture_client",
+      "parent": "documentation",
+      "label": "Architecture and decision records, client-facing technical writing",
+      "aggressive": 0.25,
+      "floor": 0.05,
+      "expected_reference": 0.15,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "code_review_ai_first_pass",
+      "parent": "code_review",
+      "label": "Reviewer effort per PR with an AI first pass, PR size held constant",
+      "aggressive": 0.35,
+      "floor": 0.1,
+      "expected_reference": 0.25,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "security_known_classes",
+      "parent": "security_compliance",
+      "label": "Remediating scanner-flagged, known vulnerability classes",
+      "aggressive": 0.7,
+      "floor": 0.3,
+      "expected_reference": 0.5,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "security_novel_threat_modeling",
+      "parent": "security_compliance",
+      "label": "Novel vulnerabilities, CVE patching, threat modeling",
+      "aggressive": 0.3,
+      "floor": 0.05,
+      "expected_reference": 0.15,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "compliance_evidence",
+      "parent": "security_compliance",
+      "label": "Compliance evidence and control mapping",
+      "aggressive": 0.25,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "iac_authoring",
+      "parent": "devops_infrastructure",
+      "label": "Authoring IaC, CI YAML, Dockerfiles, manifests with a validate/plan loop",
+      "aggressive": 0.5,
+      "floor": 0.2,
+      "expected_reference": 0.35,
+      "code_producing": true,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "devops_operating",
+      "parent": "devops_infrastructure",
+      "label": "Operating: environment failures, incidents, capacity, live changes",
+      "aggressive": 0.25,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "ux_drafts_prototypes",
+      "parent": "ui_ux_design",
+      "label": "Research synthesis and first-draft flows, wireframes, prototypes",
+      "aggressive": 0.6,
+      "floor": 0.25,
+      "expected_reference": 0.4,
+      "code_producing": false,
+      "typical_discipline": "design"
+    },
+    {
+      "id": "ux_production_research",
+      "parent": "ui_ux_design",
+      "label": "Production visual design, design review, research with real users",
+      "aggressive": 0.2,
+      "floor": 0.0,
+      "expected_reference": 0.1,
+      "code_producing": false,
+      "typical_discipline": "design"
+    },
+    {
+      "id": "requirements_drafting",
+      "parent": "requirements_discovery",
+      "label": "Drafting stories, acceptance criteria, specs, Gherkin",
+      "aggressive": 0.8,
+      "floor": 0.5,
+      "expected_reference": 0.65,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "requirements_live_elicitation",
+      "parent": "requirements_discovery",
+      "label": "Live elicitation, workshops, prioritization, sign-off",
+      "aggressive": 0.15,
+      "floor": 0.0,
+      "expected_reference": 0.05,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "domain_codified",
+      "parent": "domain_understanding",
+      "label": "Public, codified layer (regulations, primers, summarizing client documents)",
+      "aggressive": 0.6,
+      "floor": 0.3,
+      "expected_reference": 0.45,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "domain_tacit",
+      "parent": "domain_understanding",
+      "label": "Client-specific tacit knowledge",
+      "aggressive": 0.1,
+      "floor": 0.0,
+      "expected_reference": 0.05,
+      "code_producing": false,
+      "typical_discipline": "engineering"
+    },
+    {
+      "id": "pm_reporting",
+      "parent": "delivery_pm",
+      "label": "Recaps, status reports, reporting",
+      "aggressive": 0.7,
+      "floor": 0.4,
+      "expected_reference": 0.55,
+      "code_producing": false,
+      "typical_discipline": "delivery"
+    },
+    {
+      "id": "pm_coordination",
+      "parent": "delivery_pm",
+      "label": "Coordination, unblocking, ceremonies",
+      "aggressive": 0.1,
+      "floor": 0.0,
+      "expected_reference": 0.05,
+      "code_producing": false,
+      "typical_discipline": "delivery"
+    },
+    {
+      "id": "client_written_prep",
+      "parent": "client_communication",
+      "label": "Written prep, agendas, recaps, follow-ups",
+      "aggressive": 0.65,
+      "floor": 0.3,
+      "expected_reference": 0.5,
+      "code_producing": false,
+      "typical_discipline": "delivery"
+    },
+    {
+      "id": "client_live_conversations",
+      "parent": "client_communication",
+      "label": "Live conversations and negotiation",
+      "aggressive": 0.05,
+      "floor": 0.0,
+      "expected_reference": 0.0,
+      "code_producing": false,
+      "typical_discipline": "delivery"
+    }
+  ],
+  "attributes": [
+    {
+      "id": "verifiability",
+      "label": "Verifiability",
+      "weight": 3,
+      "two": "An automated pass/fail check exists (tests, compiler, type checker, terraform plan, screenshot vs mockup) and checking costs far less than creating",
+      "one": "Partial check; behaviour still needs human review",
+      "zero": "Correctness is a human judgment (taste, intent, UX, architecture, client agreement)"
+    },
+    {
+      "id": "spec_clarity",
+      "label": "Specification clarity",
+      "weight": 2,
+      "two": "Written acceptance criteria, design or API contract; done is defined",
+      "one": "Mostly defined, open questions remain",
+      "zero": "Requirements emerge during the work"
+    },
+    {
+      "id": "tacit_knowledge",
+      "label": "Tacit knowledge",
+      "weight": 2,
+      "two": "Everything needed is in the repo, docs or prompt",
+      "one": "Some unwritten conventions that one person can write down in under an hour",
+      "zero": "Depends on rules, history or processes that live in people's heads"
+    },
+    {
+      "id": "codebase",
+      "label": "Codebase state and familiarity",
+      "weight": 2,
+      "two": "Greenfield, or a small, loosely coupled module",
+      "one": "Documented brownfield with tests",
+      "zero": "Large, mature, tightly coupled brownfield, or the assigned engineer already maintains this exact code quickly"
+    },
+    {
+      "id": "complexity",
+      "label": "Complexity and novelty",
+      "weight": 2,
+      "two": "Boilerplate, CRUD, standard patterns, docs, tests of clear behaviour",
+      "one": "Known patterns combined, moderate logic",
+      "zero": "Novel algorithms, concurrency, performance tuning, cross-cutting design"
+    },
+    {
+      "id": "context_size",
+      "label": "Context size",
+      "weight": 1,
+      "two": "A few files; fits easily in one session",
+      "one": "Tens of files or several services",
+      "zero": "Many repos or services, or very large schemas"
+    },
+    {
+      "id": "popularity",
+      "label": "Language and API popularity",
+      "weight": 1,
+      "two": "Mainstream language, framework and high-frequency APIs (TypeScript, Python, Java, React, Postgres, Stripe)",
+      "one": "Less common framework or documented internal libraries",
+      "zero": "Niche or legacy language, proprietary DSL, low-frequency or undocumented API"
+    },
+    {
+      "id": "task_length",
+      "label": "Task length vs model reliability",
+      "weight": 1,
+      "two": "Splits into verifiable steps, each within the current 80%-reliability horizon (H80)",
+      "one": "Steps up to the 50% horizon",
+      "zero": "Cannot be cut into checkable steps"
+    },
+    {
+      "id": "stakes",
+      "label": "Stakes and reversibility",
+      "weight": 1,
+      "two": "Internal, throwaway or trivially reverted",
+      "one": "Production, reversible behind flags or rollback",
+      "zero": "Auth, payments, PII, compliance, irreversible data or infrastructure operations"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G1",
+      "rule": "verifiability = 0 and stakes = 0",
+      "effect": "saving set to the floor"
+    },
+    {
+      "id": "G2",
+      "rule": "stakes = 0 (authentication, payments, personal data, compliance, irreversible operations)",
+      "effect": "minus 5 points; minus 10 if the agent writes the security-sensitive code"
+    },
+    {
+      "id": "G3",
+      "rule": "unfamiliar codebase with no agent-ready docs or test commands (cold start)",
+      "effect": "minus 5 points, or price one context-setup item per codebase instead (0.5 to 2 days)"
+    },
+    {
+      "id": "G4",
+      "rule": "expected AI diff far larger than a human diff and not sliced",
+      "effect": "minus 5 points"
+    },
+    {
+      "id": "floor",
+      "rule": "build (code-producing) items",
+      "effect": "never below 0%; flagged as a slowdown risk when D < 0.25. Only code review, whose floor is negative, can go below 0%"
+    },
+    {
+      "id": "ceiling",
+      "rule": "every row",
+      "effect": "never above the aggressive figure"
+    }
+  ],
+  "downstream_reserve": {
+    "applied_lambda": 0.1,
+    "no_review_or_qa_lines_extra": 0.1,
+    "rule": "add back lambda x hours saved on code-producing rows, for the review, QA, security and stability load AI output creates downstream; lambda 0.10, or 0.20 when the estimate has no code-review or QA lines",
+    "reference_lambdas": {
+      "conservative": 0.35,
+      "expected": 0.2,
+      "aggressive": 0.1
+    }
+  },
+  "review_and_qa_rule": "Code review and QA are priced on the hours the build would take without AI (never shrunk in proportion to the AI-reduced build), then get their own rows.",
+  "h80": {
+    "measured_hours": 1.5,
+    "measured_model": "Gemini 3.1 Pro",
+    "measured_date": "2026-02",
+    "restricted_preview_hours": 3.1,
+    "extrapolated_hours_2026_10": [
+      4,
+      6
+    ],
+    "applied_hours": 4,
+    "note": "Score the task-length attribute against the applied value (lower end of the October 2026 extrapolation from METR's time-horizon data, about a four-month doubling). Replace with the newest published METR measurement at every re-date."
+  },
+  "default_splits": {
+    "qa": [
+      {
+        "activity": "test_automation",
+        "share": 0.5
+      },
+      {
+        "activity": "manual_qa",
+        "share": 0.5
+      }
+    ],
+    "delivery": [
+      {
+        "activity": "delivery_pm",
+        "share": 0.75
+      },
+      {
+        "activity": "client_communication",
+        "share": 0.25
+      }
+    ],
+    "design": [
+      {
+        "activity": "ui_ux_design",
+        "share": 1.0
+      }
+    ]
+  },
+  "default_splits_note": "Defaults used when a work item gives no split for its derived QA, delivery or design days. They are working defaults, not research figures; override them per item when the work is clearly one kind."
+}
