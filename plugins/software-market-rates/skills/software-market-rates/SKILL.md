@@ -12,7 +12,7 @@ Rates are the multiplier in any software cost estimate, and they move more with 
 Ask for anything missing, in one short message, then proceed with sensible defaults:
 
 - **Roles**, for example senior software engineer, UI/UX designer, QA engineer, project or delivery manager. Default to those four, because they are the four disciplines the estimate skill counts.
-- **Seniority** per role (junior, mid, senior, lead). Default to senior for engineering and mid-to-senior for the rest.
+- **Seniority** per role (junior, mid, senior, lead). Default to senior for engineering and delivery management, mid-senior for design and mid for QA.
 - **Countries or regions** to compare. If the user has no preference, use three: United States (onshore), Latin America (nearshore to the US), and Eastern Europe or Asia (offshore).
 - **Engagement type**: a firm (agency or development company), a freelancer, or an employee. Default to firms.
 - **The proposed team**: how many of each role, in full-time equivalents, so the blended rate reflects the real mix.
@@ -31,7 +31,11 @@ Each row of the table carries one `metric`: `billed_hourly`, `salary_annual` or 
 - **Prefer sources with a stated method and a sample:** government labour statistics (for salaries), salary aggregators that publish sample sizes, published outsourcing rate guides that cover many vendors, freelance marketplaces' own published rate data. Use the newest edition and record its publication date in the note.
 - **One vendor's own price list is not a market rate.** Do not use any single firm's published prices as a market figure, and that includes the firm that published this skill.
 - **Ranges, not points.** Record `low` and `high` as the source publishes them. If a source gives one figure, use it for both and say so in the note.
-- **Two sources per important cell** (the roles with the most days) when you can find them. Keep each as its own row; do not average them silently.
+- **Two sources per important cell** (the roles with the most days) when you can find them. Keep each as its own row; do not average them. When a cell has several rows, the blended rate spans them (lowest low to highest high), so keep only rows you would defend.
+- **Secondary citations** are allowed when the original is gated: name both in `source` (for example "Publisher 2026 guide, as reproduced by Site") and say so in the note.
+- **Computed ranges** are allowed from a raw public dataset (for example percentiles of published contract records) if the note says exactly how: dataset, filter, statistic, record count.
+- **Government contract ceilings** (for example GSA schedule rates) are not-to-exceed prices for public buyers and sit at the top of commercial rates. If you use them, say so in the note.
+- **No seniority split** in the source: record the seniority as `All levels`. The blend uses an `All levels` row when no exact seniority row exists, and says so under the blend table.
 - State the currency (default USD) and whether the figure is hourly or annual.
 
 ## Workflow
@@ -45,7 +49,7 @@ Each row of the table carries one `metric`: `billed_hourly`, `salary_annual` or 
    python3 scripts/rates_table.py rates.json --out .
    ```
 
-   The script refuses rows without a source, URL or month (exit code 2) and lists them. Find a source or remove the row; do not add `--drop-unsourced` unless the user agrees to publish a table with gaps.
+   The script refuses rows without a source, URL or month (exit code 2) and lists them. Find a source or remove the row; do not add `--drop-unsourced` unless the user agrees to publish a table with gaps. Exit code 3 means the proposed team needs a cell the table does not have: find a source, add an `All levels` row from a source without a seniority split, or drop that region from `blend.regions` and tell the user why.
 5. Show the user `rates.md` (the table and the blended rate), attach `rates.csv`, and point out the cells that drive the total (usually the engineering rate, because engineering carries most of the days).
 6. If the user is building an estimate, say that `rates-for-estimate.json` is ready for the `software-cost-estimate` skill.
 
@@ -72,7 +76,7 @@ Each row of the table carries one `metric`: `billed_hourly`, `salary_annual` or 
   ],
   "team": [
     { "role": "Software engineer", "seniority": "Senior", "fte": 2, "discipline": "engineering" },
-    { "role": "UI/UX designer", "seniority": "Mid", "fte": 0.5, "discipline": "design" },
+    { "role": "UI/UX designer", "seniority": "Mid-senior", "fte": 0.5, "discipline": "design" },
     { "role": "QA engineer", "seniority": "Mid", "fte": 1, "discipline": "qa" },
     { "role": "Project manager", "seniority": "Senior", "fte": 0.5, "discipline": "delivery" }
   ],
@@ -84,7 +88,7 @@ Each row of the table carries one `metric`: `billed_hourly`, `salary_annual` or 
 
 ## Outputs
 
-- `rates.md`: one table per metric (billed rates, salaries, loaded cost) with role, seniority, region, country, engagement, low, high, source and month on every row; then the blended rate per region for the proposed team (low, mid, high), with the team mix stated.
+- `rates.md`: one table per metric (billed rates, salaries, loaded cost) with role, seniority, region, country (or "Region-wide"), engagement, low, high, source, month and note on every row; then the blended rate per region for the proposed team (low, mid, high), with the team mix stated.
 - `rates.csv`: the same rows, one per line, for spreadsheets.
 - `rates-for-estimate.json`: per region, the low and high hourly rate for each of the four disciplines, ready for `software-cost-estimate`.
 

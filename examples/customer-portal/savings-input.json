@@ -1,0 +1,3609 @@
+{
+  "ai_practice": "Senior engineers use agentic coding tools (Claude Code) every day; new TypeScript, React, Node and Postgres codebase with an agent instructions file and test commands from day one.",
+  "default_scores": {
+    "verifiability": 2,
+    "spec_clarity": 1,
+    "tacit_knowledge": 1,
+    "codebase": 2,
+    "complexity": 1,
+    "context_size": 2,
+    "popularity": 2,
+    "task_length": 2,
+    "stakes": 1
+  },
+  "default_flags": {
+    "cold_start": false,
+    "agent_writes_security_code": false,
+    "large_unsliced_diff": false
+  },
+  "items": [
+    {
+      "id": "E1",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "requirements_live_elicitation",
+            "share": 0.5
+          },
+          {
+            "activity": "requirements_drafting",
+            "share": 0.35,
+            "scores": {
+              "verifiability": 1,
+              "spec_clarity": 1,
+              "tacit_knowledge": 1
+            }
+          },
+          {
+            "activity": "domain_tacit",
+            "share": 0.15
+          }
+        ],
+        "design": [
+          {
+            "activity": "ux_drafts_prototypes",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "ux_production_research",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 0,
+        "spec_clarity": 0,
+        "tacit_knowledge": 0,
+        "task_length": 1
+      },
+      "move_up": "Writing down the distributor's current order, approval and QuickBooks routines before the workshops would turn more of this into drafting."
+    },
+    {
+      "id": "E2",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.35
+          },
+          {
+            "activity": "domain_tacit",
+            "share": 0.35
+          },
+          {
+            "activity": "docs_architecture_client",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "spec_clarity": 0,
+        "tacit_knowledge": 0,
+        "context_size": 1,
+        "popularity": 1,
+        "task_length": 1,
+        "stakes": 2
+      },
+      "move_up": "Read-only API access to a copy of the real QuickBooks company file before kickoff would turn most of the audit into scripted queries."
+    },
+    {
+      "id": "E3",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "modeling_decisions_live_migration",
+            "share": 0.6
+          },
+          {
+            "activity": "docs_architecture_client",
+            "share": 0.4
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 0,
+        "complexity": 0,
+        "context_size": 1,
+        "task_length": 1
+      },
+      "move_up": "Agreeing field ownership per synced entity before the design session would make the model checkable against written rules."
+    },
+    {
+      "id": "E4",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ux_drafts_prototypes",
+            "share": 0.8,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "ux_production_research",
+            "share": 0.2,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 0,
+        "task_length": 1,
+        "stakes": 2
+      },
+      "move_up": "Starting from an existing B2B portal pattern library and the written acceptance criteria would let AI draft more of the flows."
+    },
+    {
+      "id": "E5",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ux_production_research",
+            "share": 0.7,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "ux_drafts_prototypes",
+            "share": 0.3,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 0,
+        "task_length": 1
+      },
+      "move_up": "Adopting an off-the-shelf design system and theming it, instead of designing one, would move this up."
+    },
+    {
+      "id": "E6",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "setup_scaffolding",
+            "share": 0.6
+          },
+          {
+            "activity": "iac_authoring",
+            "share": 0.2
+          },
+          {
+            "activity": "docs_readme_runbooks",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E7",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "iac_authoring",
+            "share": 0.6
+          },
+          {
+            "activity": "devops_operating",
+            "share": 0.3,
+            "scores": {
+              "verifiability": 1
+            }
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "context_size": 1
+      }
+    },
+    {
+      "id": "E8",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "schema_migration_code",
+            "share": 0.6
+          },
+          {
+            "activity": "modeling_decisions_live_migration",
+            "share": 0.15,
+            "scores": {
+              "verifiability": 1
+            }
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "context_size": 1
+      }
+    },
+    {
+      "id": "E9",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.5
+          },
+          {
+            "activity": "iac_authoring",
+            "share": 0.2
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "context_size": 1
+      }
+    },
+    {
+      "id": "E10",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.75
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E11",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.2
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "security_compliance",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2,
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "Using the auth provider's hosted sign-in pages would leave less security code for the agent to write."
+    },
+    {
+      "id": "E12",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.5
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.25
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "A written invite-token spec (expiry, single use, rate limits) would let the agent work against tests instead of review."
+    },
+    {
+      "id": "E13",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.4
+          },
+          {
+            "activity": "security_compliance",
+            "share": 0.2
+          },
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.3
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0,
+        "complexity": 0,
+        "context_size": 1
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "A permission matrix written as test fixtures before coding would make every authorization change machine-checked."
+    },
+    {
+      "id": "E14",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.55
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.15
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "context_size": 1
+      },
+      "move_up": "Settling the approval edge cases (limit changes, approver absent, multiple approvers) in writing before the build would move this up."
+    },
+    {
+      "id": "E15",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.5
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.25
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      },
+      "move_up": "Reusing the authorization layer from E13 unchanged keeps this to screens and tests."
+    },
+    {
+      "id": "E16",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.4
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.35
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "move_up": "Knowing where customer prices live (the first open question) would remove the main ambiguity."
+    },
+    {
+      "id": "E17",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "E18",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E19",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.5
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.25
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "E20",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.3
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.3
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.15
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E21",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E22",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.5
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.2
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "A Stripe test-mode account with webhook fixtures and recorded multi-invoice scenarios from day one would move this up the band."
+    },
+    {
+      "id": "E23",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.6
+          },
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.3
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "Replaying recorded Stripe event sequences (out-of-order, duplicate, failed) in CI would make the webhook handler fully machine-checked."
+    },
+    {
+      "id": "E24",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.55
+          },
+          {
+            "activity": "security_compliance",
+            "share": 0.1
+          },
+          {
+            "activity": "compliance_evidence",
+            "share": 0.1
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "Starting the Intuit production-key review in week one and keeping token handling in a small, tested module would move this up."
+    },
+    {
+      "id": "E25",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.55
+          },
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "complexity": 0
+      },
+      "move_up": "A recorded QuickBooks sandbox harness that simulates throttling and missed webhooks would give the agent a pass/fail check."
+    },
+    {
+      "id": "E26",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.55
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.15
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "tacit_knowledge": 0
+      },
+      "move_up": "A cleaned export of the real customer list with the distributor's matching rules written down would move this up."
+    },
+    {
+      "id": "E27",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.6
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.1
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "tacit_knowledge": 0
+      },
+      "move_up": "Confirming where prices and stock live would turn this into a mapping exercise against a known API."
+    },
+    {
+      "id": "E28",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.55
+          },
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "stakes": 0
+      },
+      "move_up": "A sandbox company configured with the distributor's real tax and terms setup would let tests check invoice output end to end."
+    },
+    {
+      "id": "E29",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.6
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.1
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1
+      },
+      "move_up": "Recorded change-data-capture payloads for edits, voids and credit memos would make this testable offline."
+    },
+    {
+      "id": "E30",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.6
+          },
+          {
+            "activity": "domain_tacit",
+            "share": 0.1
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "stakes": 0,
+        "tacit_knowledge": 0
+      },
+      "move_up": "An hour with the distributor's bookkeeper to write down the deposit and fee entries would remove the tacit-knowledge block."
+    },
+    {
+      "id": "E31",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "documented_api_integration",
+            "share": 0.15
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.1
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "complexity": 0
+      },
+      "move_up": "Written field-ownership rules per entity would shrink the conflict cases and make each one a test."
+    },
+    {
+      "id": "E32",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.4
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1
+      },
+      "move_up": "Agreed mismatch tolerances written as test cases would make the report checkable."
+    },
+    {
+      "id": "E33",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "documented_api_integration",
+            "share": 0.45
+          },
+          {
+            "activity": "modeling_decisions_live_migration",
+            "share": 0.25
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.1
+          },
+          {
+            "activity": "docs_readme_runbooks",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1,
+        "tacit_knowledge": 0
+      },
+      "move_up": "A copy of the production company file for repeated dry runs, with validation counts as checks, would move this up."
+    },
+    {
+      "id": "E34",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "Reusing the customer authorization layer for staff roles instead of a second one would cut the security-sensitive code."
+    },
+    {
+      "id": "E35",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "stakes": 0
+      }
+    },
+    {
+      "id": "E36",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.2
+          },
+          {
+            "activity": "documented_api_integration",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1,
+              "popularity": 1
+            }
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "E37",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E38",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "crud_business_logic",
+            "share": 0.45
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.3
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "spec_clarity": 2,
+        "complexity": 2
+      }
+    },
+    {
+      "id": "E39",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.75
+          },
+          {
+            "activity": "debugging_production",
+            "share": 0.15
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "popularity": 1,
+        "context_size": 1
+      },
+      "move_up": "Stable sandbox fixtures and recorded third-party responses would cut the flaky-test triage."
+    },
+    {
+      "id": "E40",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "security_known_classes",
+            "share": 0.4
+          },
+          {
+            "activity": "security_novel_threat_modeling",
+            "share": 0.4,
+            "scores": {
+              "verifiability": 0
+            }
+          },
+          {
+            "activity": "unit_tests",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "stakes": 0,
+        "context_size": 1
+      },
+      "flags": {
+        "agent_writes_security_code": true
+      },
+      "move_up": "Scanner and authorization-test gates in CI from week one would leave fewer findings for the final review."
+    },
+    {
+      "id": "E41",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.4
+          },
+          {
+            "activity": "devops_operating",
+            "share": 0.3,
+            "scores": {
+              "verifiability": 1
+            }
+          },
+          {
+            "activity": "debugging_reproducible",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "E42",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.5
+          },
+          {
+            "activity": "debugging_reproducible",
+            "share": 0.3
+          },
+          {
+            "activity": "integration_e2e_tests",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ux_production_research",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1
+      }
+    },
+    {
+      "id": "E43",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "debugging_reproducible",
+            "share": 0.3
+          },
+          {
+            "activity": "crud_business_logic",
+            "share": 0.3
+          },
+          {
+            "activity": "ui_from_design_system",
+            "share": 0.2
+          },
+          {
+            "activity": "requirements_live_elicitation",
+            "share": 0.1
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ux_production_research",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "ux_drafts_prototypes",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "spec_clarity": 0
+      },
+      "move_up": "Turning each piece of UAT feedback into a failing test before fixing it would move the rework up the band."
+    },
+    {
+      "id": "E44",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "devops_operating",
+            "share": 0.5
+          },
+          {
+            "activity": "iac_authoring",
+            "share": 0.2
+          },
+          {
+            "activity": "docs_readme_runbooks",
+            "share": 0.2
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "stakes": 0
+      },
+      "move_up": "A rehearsed cutover on staging with the same scripts and checklists would make most steps repeatable and checkable."
+    },
+    {
+      "id": "E45",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "qa_test_cases",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 1,
+              "task_length": 2,
+              "stakes": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "docs_architecture_client",
+            "share": 0.4
+          },
+          {
+            "activity": "docs_readme_runbooks",
+            "share": 0.4
+          },
+          {
+            "activity": "client_live_conversations",
+            "share": 0.2
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "move_up": "Keeping decision records and runbooks current during the build leaves only the walkthrough for the end."
+    },
+    {
+      "id": "E46",
+      "splits": {
+        "delivery": [
+          {
+            "activity": "delivery_pm",
+            "share": 0.75,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          },
+          {
+            "activity": "client_communication",
+            "share": 0.25,
+            "scores": {
+              "verifiability": 0,
+              "tacit_knowledge": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ],
+        "qa": [
+          {
+            "activity": "test_automation",
+            "share": 0.5
+          },
+          {
+            "activity": "manual_qa",
+            "share": 0.5,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1
+            }
+          }
+        ],
+        "engineering": [
+          {
+            "activity": "debugging_production",
+            "share": 0.6
+          },
+          {
+            "activity": "debugging_reproducible",
+            "share": 0.3
+          },
+          {
+            "activity": "code_review",
+            "share": 0.1,
+            "scores": {
+              "verifiability": 1
+            }
+          }
+        ],
+        "design": [
+          {
+            "activity": "ui_ux_design",
+            "share": 1.0,
+            "scores": {
+              "verifiability": 0,
+              "task_length": 1,
+              "stakes": 1
+            }
+          }
+        ]
+      },
+      "scores": {
+        "verifiability": 1,
+        "spec_clarity": 0
+      },
+      "move_up": "Production logs and alerts wired to reproducible test cases would turn more incidents into reproducible bugs."
+    }
+  ],
+  "default_scores_by_discipline": {
+    "design": {
+      "codebase": 1,
+      "complexity": 1,
+      "context_size": 1,
+      "popularity": 1
+    },
+    "delivery": {
+      "codebase": 1,
+      "complexity": 1,
+      "context_size": 1,
+      "popularity": 1
+    }
+  }
+}

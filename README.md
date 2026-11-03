@@ -39,6 +39,16 @@ The figures are planning figures for a senior team that uses agentic coding tool
 
 [`examples/customer-portal/`](examples/customer-portal/) holds a full run on a fictional B2B distributor customer portal (logins and roles, order history and one-click reorder, card payments through Stripe, a two-way QuickBooks Online sync, an admin back office, responsive web): the rates table, the estimate workbook and the AI savings workbook.
 
+The estimate came to 46 work items and 319 days of effort across engineering, design, QA and delivery management. The two-way QuickBooks Online sync was the largest epic at 77 days. With the AI savings pass, effort fell to 226 days (29% fewer):
+
+| Rate region (firms, billed hourly) | Without AI | With the AI savings pass |
+|---|---|---|
+| United States | $324,000 to $473,000 | $231,000 to $337,000 |
+| Latin America | $132,000 to $177,000 | $92,000 to $125,000 |
+| Eastern Europe | $121,000 to $217,000 | $85,000 to $155,000 |
+
+Every rate in the run has a source and the month it was checked ([rates.md](examples/customer-portal/rates.md)). The product is fictional; your scope will move the number more than anything else.
+
 ## From a ballpark to a committed number
 
 These skills give you a careful ballpark. To turn it into a number someone commits to, the requirements need to be written down, the risky items identified, and the person estimating needs to be accountable for delivering it. Leanware, which publishes these skills, does that in [Sprint 0](https://leanware.co/services/sprint-0): a fixed-fee discovery phase that ends with a milestone plan where every milestone is defined and priced. More on how Leanware builds custom software: [Software Product Development](https://leanware.co/services/software-product-development#claude-skills) and [Dedicated Software Development Teams](https://leanware.co/services/dedicated-development-team#claude-skills).

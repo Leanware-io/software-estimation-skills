@@ -92,13 +92,13 @@ def main():
             continue
         unit = "per year" if metric == "salary_annual" else "per hour"
         lines += [f"## {title}, {unit}", "",
-                  "| Role | Seniority | Region | Country | Engagement | Low | High | Source | Checked |",
-                  "|---|---|---|---|---|---|---|---|---|"]
+                  "| Role | Seniority | Region | Country | Engagement | Low | High | Source | Checked | Note |",
+                  "|---|---|---|---|---|---|---|---|---|---|"]
         for r in sorted(subset, key=lambda r: (r["region"], r["role"], r["seniority"])):
             lines.append(
-                f"| {r['role']} | {r['seniority']} | {r['region']} | {r.get('country') or 'All'} | "
+                f"| {r['role']} | {r['seniority']} | {r['region']} | {r.get('country') or 'Region-wide'} | "
                 f"{r['engagement']} | {money(float(r['low']), currency)} | {money(float(r['high']), currency)} | "
-                f"[{r['source']}]({r['url']}) | {r['checked']} |")
+                f"[{r['source']}]({r['url']}) | {r['checked']} | {r.get('note', '')} |")
         lines.append("")
 
     with open(out / "rates.csv", "w", newline="") as fh:
@@ -122,7 +122,7 @@ def main():
 
     estimate = {"currency": currency, "engagement": engagement, "metric": metric,
                 "source_file": "rates.csv", "rate_scenarios": []}
-    missing = []
+    missing, fallbacks = [], []
     if team:
         total_fte = sum(float(m["fte"]) for m in team)
         mix = ", ".join(f"{m['fte']} {m['seniority'].lower()} {m['role'].lower()}" for m in team)
@@ -134,6 +134,11 @@ def main():
             per_discipline = {}
             for m in team:
                 cell = cells.get(key(m["role"], m["seniority"], region, engagement, metric))
+                if not cell:
+                    # A source with no seniority split is recorded as "All levels"; use it, and say so.
+                    cell = cells.get(key(m["role"], "All levels", region, engagement, metric))
+                    if cell:
+                        fallbacks.append(f"{m['role']} in {region}: all-levels figure used for {m['seniority'].lower()}")
                 if not cell:
                     missing.append(f"{m['seniority']} {m['role']} / {region} / {engagement} / {metric}")
                     continue
@@ -151,6 +156,10 @@ def main():
             for disc, (dlo, dhi, fte) in per_discipline.items():
                 scenario["rates"][disc] = {"low": round(dlo / fte, 2), "high": round(dhi / fte, 2)}
             estimate["rate_scenarios"].append(scenario)
+        lines.append("")
+        lines.append("Where a cell has several sourced rows (countries or sources), its range spans all of them.")
+        for f in fallbacks:
+            lines.append(f"- {f}.")
         lines.append("")
     if missing:
         print("The proposed team needs rate cells the table does not have:")

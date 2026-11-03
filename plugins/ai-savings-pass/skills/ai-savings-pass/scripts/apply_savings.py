@@ -10,6 +10,7 @@ review and QA on the hours without AI, adds the downstream reserve, and writes
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
 from collections import OrderedDict
@@ -22,6 +23,8 @@ from openpyxl.utils import get_column_letter
 DISCIPLINES = ("engineering", "design", "qa", "delivery")
 LABELS = {"engineering": "Engineering", "design": "UI/UX design", "qa": "QA", "delivery": "Delivery management"}
 FLAGS = ("agent_writes_security_code", "cold_start", "large_unsliced_diff")
+# Rows that check code rather than write it: the agent-writes-security-code flag does not raise their gate.
+TEST_OR_REVIEW = ("code_review", "test_automation", "unit_tests", "integration_e2e_tests", "mechanical_test_migration")
 HEADER = PatternFill("solid", fgColor="1F2933")
 INPUT = PatternFill("solid", fgColor="FFF4C2")
 DERIVED = PatternFill("solid", fgColor="EEF0F2")
@@ -52,7 +55,7 @@ def saving_for(act, scores, flags, weights):
     if touches_code and scores["stakes"] == 0:
         p = 10 if flags.get("agent_writes_security_code") else 5
         points += p
-        caps.append(f"G2 auth, payments or personal data: -{p} points")
+        caps.append(f"G2 high stakes (auth, payments, personal data, compliance or irreversible changes): -{p} points")
     if touches_code and flags.get("cold_start"):
         points += 5
         caps.append("G3 unfamiliar codebase without agent-ready docs: -5 points")
@@ -113,8 +116,14 @@ def main():
                 if not act:
                     problems.append(f"{item['id']}: unknown activity '{s['activity']}'")
                     continue
+                # Item-level scores describe the code, so they apply to engineering and QA rows (QA tests
+                # that code); design and delivery rows take their discipline defaults.
                 scores = dict(inp.get("default_scores") or {})
-                scores.update(spec.get("scores") or {})
+                scores.update((inp.get("default_scores_by_discipline") or {}).get(disc) or {})
+                if disc in ("engineering", "qa"):
+                    scores.update(spec.get("scores") or {})
+                else:
+                    scores.update((spec.get("discipline_scores") or {}).get(disc) or {})
                 scores.update(s.get("scores") or {})
                 absent = [k for k in weights if k not in scores]
                 if absent:
@@ -127,6 +136,8 @@ def main():
                 flags = dict(inp.get("default_flags") or {})
                 flags.update(spec.get("flags") or {})
                 flags.update(s.get("flags") or {})
+                if act["id"].startswith(TEST_OR_REVIEW):
+                    flags["agent_writes_security_code"] = False
                 d, points, base, sv, caps, slow = saving_for(act, scores, flags, weights)
                 row_days = days * float(s["share"])
                 rows.append({"item_id": item["id"], "item": item["item"], "epic": item["epic"], "discipline": disc,
@@ -170,11 +181,15 @@ def main():
         regions.append(reg)
 
     items = OrderedDict()
+    code_items = {r["item_id"] for r in rows if r["touches_code"]}
     for r in rows:
         it = items.setdefault(r["item_id"], {"item": r["item"], "epic": r["epic"], "days": 0.0, "saved": 0.0,
                                              "min_D": 1.0, "caps": set(), "zero": set(), "slowdown": False})
         it["days"] += r["days"]
         it["saved"] += r["saved_days"]
+        # Describe a code item by its code rows, so PM and manual-QA rows do not dominate the diagnosis.
+        if r["item_id"] in code_items and not r["touches_code"]:
+            continue
         it["min_D"] = min(it["min_D"], r["D"])
         it["caps"].update(c.split(":")[0] for c in r["caps"] if c.startswith("G"))
         it["zero"].update(r["zero_scored"])
@@ -202,10 +217,11 @@ def main():
     (out / "savings.json").write_text(json.dumps(result, indent=2) + "\n")
     (out / "savings-summary.md").write_text(summary(est, table, result, currency))
     print(f"Wrote {xlsx}, savings.json and savings-summary.md: {days_without:.1f} days without AI, "
-          f"{days_with:.1f} with AI ({1 - days_with / days_without:.0%} fewer).")
+          f"{days_with:.1f} with AI ({1 - days_with / days_without:.0%} fewer).", flush=True)
     check = Path(__file__).with_name("recalc_check.py")
     sys.exit(subprocess.run([sys.executable, str(check), str(xlsx), "--expect",
-                             str(out / "savings-expected-values.json")]).returncode)
+                             str(out / "savings-expected-values.json")],
+                            env=dict(os.environ, TQDM_DISABLE="1")).returncode)
 
 
 def header(ws, row, labels):
@@ -254,7 +270,7 @@ def write_workbook(path, est, table, weights, rows, lam, has_rq, disc_tot, regio
     cols = (["Item", "Work item", "Discipline", "Activity", "Days without AI", "Aggressive", "Floor", "Lower bound"]
             + attr_labels + ["Agent writes security code", "Cold start", "Large unsliced diff", "Code-producing", "Touches code",
                              "D", "Gate points", "Base saving", "Saving", "Days saved", "Slowdown risk",
-                             "Caps fired", "Attributes scored 0"])
+                             "Caps fired (when built)", "Attributes scored 0 (when built)"])
     header(sv, 1, cols)
     n_attr = len(weights)
     c_score0 = 9
@@ -282,8 +298,8 @@ def write_workbook(path, est, table, weights, rows, lam, has_rq, disc_tot, regio
                                    f"-{L['Gate points']}{x}/100))")
         sv[f"{L['Days saved']}{x}"] = f"=E{x}*{L['Saving']}{x}"
         sv[f"{L['Slowdown risk']}{x}"] = f'=IF(AND({codeL}{x}="Yes",{L["D"]}{x}<0.25),"Slowdown risk","")'
-        sv[f"{L['Caps fired']}{x}"] = "; ".join(r["caps"])
-        sv[f"{L['Attributes scored 0']}{x}"] = ", ".join(r["zero_scored"])
+        sv[f"{L['Caps fired (when built)']}{x}"] = "; ".join(r["caps"])
+        sv[f"{L['Attributes scored 0 (when built)']}{x}"] = ", ".join(r["zero_scored"])
         for name in ("Aggressive", "Floor", "Lower bound", "D", "Base saving", "Saving"):
             sv[f"{L[name]}{x}"].number_format = "0%"
         sv[f"E{x}"].number_format = sv[f"{L['Days saved']}{x}"].number_format = "0.00"
@@ -301,8 +317,8 @@ def write_workbook(path, est, table, weights, rows, lam, has_rq, disc_tot, regio
     sv.freeze_panes = "E2"
     for c, w in enumerate([6, 36, 14, 34] + [10] * (len(cols) - 4), start=1):
         sv.column_dimensions[get_column_letter(c)].width = w
-    sv.column_dimensions[L["Caps fired"]].width = 50
-    sv.column_dimensions[L["Attributes scored 0"]].width = 30
+    sv.column_dimensions[L["Caps fired (when built)"]].width = 50
+    sv.column_dimensions[L["Attributes scored 0 (when built)"]].width = 30
 
     tt = wb.create_sheet("Totals")
     tt["A1"] = "Totals without and with AI (days)"
@@ -384,7 +400,7 @@ def summary(est, table, res, currency):
              f"**{res['reserve_days']:.1f}** | **{res['days_with_ai']:.1f}** |")
     o += ["", f"The reserve adds back {res['lambda']:.0%} of the days saved on code-producing work, for the review, QA "
               "and fixes that AI output creates downstream. Code review and QA are priced on the hours without AI.", "",
-          "## Per work item", "", "| Item | Work item | Days | Saved | Lowest D | Caps fired |", "|---|---|---|---|---|---|"]
+          "## Per work item", "", "| Item | Work item | Days | Saved | Lowest D (code rows) | Caps fired |", "|---|---|---|---|---|---|"]
     for iid, it in res["items"].items():
         o.append(f"| {iid} | {it['item']} | {it['days']:.1f} | {it['share']:.0%} | {it['min_D']:.2f} | "
                  f"{', '.join(it['caps']) or 'none'} |")

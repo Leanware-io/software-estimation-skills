@@ -23,9 +23,9 @@ If the table is past its `stale_after` date, tell the user the figures are out o
 
 1. **Ask how the team uses AI today** (agentic tools daily, autocomplete only, none) and whether the codebase is new or existing, with or without agent-ready docs and test commands. If the team does not use agentic tools daily, say the aggressive figures do not apply to them and score every item's attributes conservatively.
 2. **Split every work item into its activities**, per discipline. A "feature" that bundles UI, API, tests and docs is split across rows before scoring, because one blended row hides the variance the method exists to capture. For code-producing items, give about 10% of the engineering days to `code_review` unless the estimate has its own review items. Design, QA and delivery days fall back to the default splits in the data file when an item gives none.
-3. **Score nine attributes 0, 1 or 2** for each row (2 favors AI): verifiability (weight 3); specification clarity, tacit knowledge, codebase state and familiarity, complexity and novelty (2 each); context size, language and API popularity, task length against the H80 horizon, stakes and reversibility (1 each). The scoring guide is in `references/attributes.md`. Score from what the requirements say, not from optimism. Set item-level scores once and override per row only where a row differs.
-4. **Set the flags** that trigger gates: `agent_writes_security_code`, `cold_start` (unfamiliar codebase without agent-ready docs or test commands), `large_unsliced_diff`.
-5. **Run the script**. It computes D = weighted score / 30, saving = floor + (aggressive − floor) × D, applies the gates (G1 no automatic check and high stakes → floor; G2 auth, payments or personal data → minus 5 points, minus 10 if the agent writes that code; G3 cold start → minus 5; G4 large unsliced change → minus 5), keeps build rows at 0% or more with a slowdown flag when D < 0.25, never goes above the aggressive figure, and adds back 10% of the days saved on code-producing rows as a downstream reserve (20% when the estimate has no code-review or QA lines).
+3. **Score nine attributes 0, 1 or 2** for each row (2 favors AI): verifiability (weight 3); specification clarity, tacit knowledge, codebase state and familiarity, complexity and novelty (2 each); context size, language and API popularity, task length against the H80 horizon, stakes and reversibility (1 each). The scoring guide is in `references/attributes.md`. Score from what the requirements say, not from optimism. An item's `scores` describe its code and apply to its engineering and QA rows (QA tests that code); design and delivery rows take `default_scores_by_discipline` (and the item's `discipline_scores`, if any) instead, so a project manager's row never inherits the code's stakes; any row can override with its own `scores`. Writes to a system of record (accounting, ERP, payments) score 0 on stakes; reads score 1. A technical spike maps to the activity it explores, scored as throwaway work (stakes 2).
+4. **Set the flags** that trigger gates: `agent_writes_security_code`, `cold_start` (unfamiliar codebase without agent-ready docs or test commands), `large_unsliced_diff`. Gates apply only to rows that touch code; the security-code flag does not raise the gate on test or code-review rows, which check that code rather than write it.
+5. **Run the script**. It computes D = weighted score / 30, saving = floor + (aggressive − floor) × D, applies the gates (G1 no automatic check and high stakes → floor; G2 high stakes, meaning authentication, payments, personal data, compliance or irreversible changes → minus 5 points, minus 10 if the agent writes that code; G3 cold start → minus 5; G4 large unsliced change → minus 5), keeps build rows at 0% or more with a slowdown flag when D < 0.25, never goes above the aggressive figure, and adds back 10% of the days saved on code-producing rows as a downstream reserve (20% when the estimate has no code-review or QA lines).
 
 ```bash
 python3 scripts/apply_savings.py estimate.json savings-input.json --out .
@@ -39,6 +39,10 @@ python3 scripts/apply_savings.py estimate.json savings-input.json --out .
   "default_scores": {
     "verifiability": 2, "spec_clarity": 1, "tacit_knowledge": 1, "codebase": 2, "complexity": 1,
     "context_size": 2, "popularity": 2, "task_length": 2, "stakes": 1
+  },
+  "default_scores_by_discipline": {
+    "design": { "verifiability": 0, "codebase": 1, "complexity": 1, "context_size": 1, "popularity": 1, "stakes": 2 },
+    "delivery": { "verifiability": 0, "tacit_knowledge": 0, "codebase": 1, "complexity": 1, "context_size": 1, "popularity": 1, "stakes": 1 }
   },
   "default_flags": { "cold_start": false },
   "items": [

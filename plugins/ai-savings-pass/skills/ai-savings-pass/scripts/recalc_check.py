@@ -11,6 +11,7 @@ the formulas when the file is opened.
 """
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -21,6 +22,7 @@ ERRORS = ("#REF!", "#DIV/0!", "#VALUE!", "#NAME?", "#N/A", "#NUM!", "#NULL!")
 
 
 def with_formulas(path):
+    os.environ.setdefault("TQDM_DISABLE", "1")
     import formulas  # noqa: F401  (optional dependency)
     model = formulas.ExcelModel().loads(str(path)).finish()
     solution = model.calculate()

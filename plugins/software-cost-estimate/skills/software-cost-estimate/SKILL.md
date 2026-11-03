@@ -22,7 +22,7 @@ Ignore any ballpark, budget or deadline the user mentions until the estimate is 
 1. **Start from what the software must do.** Restate the scope as numbered requirements (R1, R2, ...) before estimating anything.
 2. **Break the work into atomic, demoable work items**, grouped by phase (for example Discovery, Build, Launch) and epic, each tagged to the requirement it serves. No item over about three weeks (15 days) of engineering; split anything bigger. Include the unglamorous items: project setup and CI/CD, data model, environments, integration testing, release hardening, a round of feedback rework.
 3. **Estimate engineering days and design days per item, separately.** Backend and infrastructure items carry no design days; screen-heavy items carry real ones. Estimate as a senior engineer would. Round up when unsure.
-4. **Derive QA and delivery management** as a share of engineering plus design (default 20% each). Testing and coordination grow with the size of the work, so they are derived, not guessed.
+4. **Derive QA and delivery management** as a share of engineering plus design (default 20% each), on every item, design and discovery items included (design reviews, usability checks and coordination apply there too). Testing and coordination grow with the size of the work, so they are derived, not guessed.
 5. **Put the risk buffer inside the risky items**: third-party integrations, AI features, compliance-heavy modules, anything touching an undocumented system. Add the days to those items and say why in the item's note. Never add a separate "contingency" line.
 6. **Compliance touches every module.** Audit logs, access control and data handling are priced into the items they affect, not as one line.
 7. **Check capacity.** Total days per discipline divided by the people available gives months of effort per discipline. A discipline running past the timeline is a bottleneck, not just a cost; flag it.
@@ -40,11 +40,13 @@ python3 scripts/build_estimate.py estimate-input.json --out .
 
 The script writes:
 
-- `<Project> - Estimate.xlsx`: sheets Settings (all editable inputs, yellow cells), Estimation (one row per work item; QA, delivery management, totals and cost are formulas), Capacity, Summary (days and cost by epic, cost by region, the team-based cross-check) and Open Questions.
+- `<Project> - Estimate.xlsx`: sheets Settings (all editable inputs, yellow cells), Estimation (one row per work item; QA, delivery management, totals and cost are formulas), Capacity, Summary (days and cost by epic, cost by region, the team-based cross-check), Scope (requirements and assumptions) and Open Questions.
 - `estimate.json`: the same estimate with every derived value computed, for the `ai-savings-pass` skill.
 - `estimate-summary.md`: the roll-up tables for the chat answer.
 
-The script computes every value in Python as well, so the numbers in the summary never depend on a spreadsheet engine. It then recalculates the workbook with LibreOffice if it is installed (it is in Claude.ai's code environment) and fails if any formula returns an error. If no engine is available it says so; Excel and Google Sheets calculate the formulas when the file is opened.
+- `expected-values.json`: the Python value of the key cells, used by the recalculation check.
+
+The script computes every value in Python as well, so the numbers in the summary never depend on a spreadsheet engine. It then recalculates the workbook with the `formulas` Python package or LibreOffice, whichever is installed, and fails if any formula returns an error or differs from the Python value. If neither is installed it says so and does not fail; Excel and Google Sheets calculate the formulas when the file is opened, and the summary numbers still come from Python.
 
 ## Answer
 

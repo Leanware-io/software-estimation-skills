@@ -9,6 +9,7 @@ with recalc_check.py when a spreadsheet engine is available.
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
 from collections import OrderedDict
@@ -353,7 +354,7 @@ def summary_md(data, calc):
     out.append("| **Total** | " + " | ".join(f"**{t[x]:.1f}**" for x in DISCIPLINES) + f" | **{t['total']:.1f}** |")
     out += ["", f"QA and delivery management are derived at {data['settings']['qa_share']:.0%} and "
                 f"{data['settings']['delivery_share']:.0%} of engineering plus design. "
-                f"Days are senior-engineer days of {data['settings']['hours_per_day']:g} hours.", "",
+                f"A day is {data['settings']['hours_per_day']:g} working hours.", "",
             "## Cost by rate region", "", "| Region | Low | High |", "|---|---|---|"]
     for reg in calc["regions"]:
         out.append(f"| {reg['name']} | {fmt_money(reg['low'], cur)} | {fmt_money(reg['high'], cur)} |")
@@ -401,8 +402,10 @@ def main():
     for reg in calc["regions"]:
         print(f"  {reg['name']}: {fmt_money(reg['low'], data['settings']['currency'])} to "
               f"{fmt_money(reg['high'], data['settings']['currency'])}")
+    sys.stdout.flush()
     check = Path(__file__).with_name("recalc_check.py")
-    result = subprocess.run([sys.executable, str(check), str(xlsx), "--expect", str(out / "expected-values.json")])
+    result = subprocess.run([sys.executable, str(check), str(xlsx), "--expect", str(out / "expected-values.json")],
+                            env=dict(os.environ, TQDM_DISABLE="1"))
     sys.exit(result.returncode)
 
 

@@ -1,0 +1,961 @@
+{
+  "project": {
+    "name": "Customer Portal",
+    "prepared_by": "Skill test run (fictional project)",
+    "date": "2026-11-03",
+    "summary": "A responsive web portal for a regional industrial-supplies distributor's roughly 400 business customers (1,500 users at launch, a few thousand orders a month). Each customer company has its own account, with company admins who invite colleagues as buyers, approvers or viewers; orders above a company-set limit need an approver. Customers see and search their order history, reorder a past order in one click at current prices and stock, and pay one or several open invoices by card through Stripe. Customers, products and prices, invoices and payments sync both ways with the distributor's QuickBooks Online company, with conflicts flagged to staff. Staff get a back office for companies, users, orders, payments and the sync log. New TypeScript, React, Node and Postgres codebase on a mainstream cloud."
+  },
+  "settings": {
+    "currency": "USD",
+    "hours_per_day": 8,
+    "working_days_per_month": 21,
+    "qa_share": 0.2,
+    "delivery_share": 0.2
+  },
+  "team": {
+    "engineering": 2.0,
+    "design": 0.5,
+    "qa": 0.5,
+    "delivery": 0.5
+  },
+  "timeline_months": 4,
+  "rate_scenarios": [
+    {
+      "name": "United States",
+      "rates": {
+        "engineering": {
+          "low": 137.25,
+          "high": 192.42
+        },
+        "design": {
+          "low": 100.0,
+          "high": 178.92
+        },
+        "qa": {
+          "low": 85.53,
+          "high": 140.1
+        },
+        "delivery": {
+          "low": 151.5,
+          "high": 206.9
+        }
+      }
+    },
+    {
+      "name": "Latin America",
+      "rates": {
+        "engineering": {
+          "low": 60.0,
+          "high": 75.0
+        },
+        "design": {
+          "low": 25.0,
+          "high": 49.0
+        },
+        "qa": {
+          "low": 40.0,
+          "high": 60.0
+        },
+        "delivery": {
+          "low": 53.0,
+          "high": 75.0
+        }
+      }
+    },
+    {
+      "name": "Eastern Europe",
+      "rates": {
+        "engineering": {
+          "low": 55.0,
+          "high": 86.0
+        },
+        "design": {
+          "low": 25.0,
+          "high": 99.0
+        },
+        "qa": {
+          "low": 35.0,
+          "high": 66.0
+        },
+        "delivery": {
+          "low": 50.0,
+          "high": 87.0
+        }
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "ref": "R1",
+      "text": "Customer company accounts: each customer company has its own account; a company admin invites colleagues and assigns each a role (buyer, approver, viewer); users see only their own company's data."
+    },
+    {
+      "ref": "R2",
+      "text": "Order approval: orders above a limit set by the company admin need approval from an approver before they are placed."
+    },
+    {
+      "ref": "R3",
+      "text": "Order history: customers see past orders and order lines, and search and filter them."
+    },
+    {
+      "ref": "R4",
+      "text": "Ordering and one-click reorder: buyers place orders; a past order can be reordered in one click at current prices and stock, and the cart shows what changed."
+    },
+    {
+      "ref": "R5",
+      "text": "Invoices and card payment: customers see open invoices and pay one or several by card through Stripe; payment status updates from Stripe webhooks; card data never touches the portal's servers."
+    },
+    {
+      "ref": "R6",
+      "text": "Two-way QuickBooks Online sync of customers, products and prices, invoices and payments: portal orders become QuickBooks invoices; invoices and payments recorded in QuickBooks appear in the portal; conflicts are flagged for staff, never overwritten silently."
+    },
+    {
+      "ref": "R7",
+      "text": "Staff back office: manage customer companies and users, see and edit orders, see payments, see the sync log and resolve sync conflicts."
+    },
+    {
+      "ref": "R8",
+      "text": "Responsive web app for desktop and phone browsers; no native mobile app."
+    },
+    {
+      "ref": "R9",
+      "text": "Non-functional: about 400 companies and 1,500 users at launch, a few thousand orders a month; business contact data and payment status only (no regulated data); mainstream cloud hosting; audit trail on account, order and sync changes."
+    }
+  ],
+  "open_questions": [
+    {
+      "question": "How does the distributor hold customer-specific prices: QuickBooks price rules, a single list price, or a spreadsheet?",
+      "affects": "Product catalog; products, prices and stock sync; one-click reorder",
+      "direction": "up",
+      "why": "QuickBooks price rules may not be reachable through the API; if not, the portal needs its own price table and a way to maintain it."
+    },
+    {
+      "question": "Does QuickBooks hold one customer per company, or sub-customers per site or buyer, and how many duplicates exist?",
+      "affects": "Customer mapping and sync; initial data load",
+      "direction": "up",
+      "why": "Sub-customers and duplicates need a matching step and a staff review queue before onboarding."
+    },
+    {
+      "question": "Which side owns which fields (for example, can staff edit a portal-created invoice in QuickBooks), and who resolves conflicts?",
+      "affects": "Conflict detection and resolution; invoices from QuickBooks; order administration",
+      "direction": "either",
+      "why": "Clear field ownership removes most conflicts; open-ended two-way editing makes the conflict module larger."
+    },
+    {
+      "question": "How should Stripe payments and fees be booked in QuickBooks (undeposited funds or a clearing account, fee expense, payout reconciliation), and are partial payments or card surcharges allowed?",
+      "affects": "Stripe payments recorded in QuickBooks; reconciliation; card payment",
+      "direction": "up",
+      "why": "Payout-level reconciliation and partial payments add mapping and edge cases."
+    },
+    {
+      "question": "Does the distributor use QuickBooks automated sales tax, and do customers have exemptions?",
+      "affects": "Portal orders to QuickBooks invoices; cart and checkout",
+      "direction": "up",
+      "why": "Tax must be shown at checkout and match the QuickBooks invoice; automated sales tax limits what the API lets us set."
+    },
+    {
+      "question": "Where does stock come from (QuickBooks inventory quantities, a warehouse system, or not tracked)?",
+      "affects": "Products, prices and stock sync; one-click reorder; product catalog",
+      "direction": "either",
+      "why": "A separate warehouse system is a new integration; no stock tracking removes work."
+    },
+    {
+      "question": "Is one approval limit per company enough, or are per-user limits, multi-level approvals or budgets needed?",
+      "affects": "Order approval workflow; company admin user management",
+      "direction": "up",
+      "why": "Each extra rule adds states, notifications and tests to the approval workflow."
+    },
+    {
+      "question": "Do new orders need a full catalog with search, or is reorder plus quick add by item code enough at launch?",
+      "affects": "Product catalog; cart and checkout",
+      "direction": "down",
+      "why": "A quick-add-by-code flow is smaller than a browsable catalog."
+    }
+  ],
+  "assumptions": [
+    "Responsive web only; no native mobile app.",
+    "Payments through Stripe's hosted payment element, so card data never reaches the portal (PCI scope SAQ A).",
+    "Sign-in by email and password through a managed auth provider or a mainstream library; no customer SSO.",
+    "One QuickBooks Online company (Plus or Advanced) with API access; no other ERP or warehouse system.",
+    "English only, US dollars only.",
+    "Transactional email through a mainstream provider.",
+    "Cloud hosting, Stripe fees, auth provider and email provider costs are excluded.",
+    "Two weeks of post-launch hypercare are included; ongoing support is not."
+  ],
+  "items": [
+    {
+      "phase": "Discovery",
+      "epic": "Discovery and design",
+      "ref": "R1-R9",
+      "item": "Discovery workshops, backlog and acceptance criteria",
+      "acceptance": "Signed-off backlog with acceptance criteria per story, approval rules written down, field ownership per synced entity agreed in principle.",
+      "engineering_days": 3.0,
+      "design_days": 2.0,
+      "risk_note": "",
+      "id": "E1",
+      "qa_days": 1.0,
+      "delivery_days": 1.0,
+      "total_days": 7.0,
+      "cost_low": 6790.24,
+      "cost_high": 10256.8
+    },
+    {
+      "phase": "Discovery",
+      "epic": "Discovery and design",
+      "ref": "R6",
+      "item": "QuickBooks Online technical spike and data audit of the distributor's company file",
+      "acceptance": "Sandbox app connected over OAuth; written findings on how customers, sub-customers, items, prices, stock and sales tax are held in the real file, and which of them the API exposes.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: the real company file's structure is unknown until we see it (sub-customers, price rules, tax setup).",
+      "id": "E2",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Discovery",
+      "epic": "Discovery and design",
+      "ref": "R1, R6, R9",
+      "item": "Architecture and data model design (tenancy, roles, orders, invoices, payments, sync mapping)",
+      "acceptance": "Architecture decision records and an entity diagram reviewed by the team; tenancy and sync-mapping approach agreed.",
+      "engineering_days": 3.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E3",
+      "qa_days": 0.6000000000000001,
+      "delivery_days": 0.6000000000000001,
+      "total_days": 4.2,
+      "cost_low": 4431.744000000001,
+      "cost_high": 6283.68
+    },
+    {
+      "phase": "Discovery",
+      "epic": "Discovery and design",
+      "ref": "R1-R8",
+      "item": "User flows and wireframes for the customer portal and the back office",
+      "acceptance": "Clickable wireframes for every screen at desktop and phone widths, reviewed with the distributor.",
+      "engineering_days": 0.0,
+      "design_days": 6.0,
+      "risk_note": "",
+      "id": "E4",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 7075.488,
+      "cost_high": 11919.36
+    },
+    {
+      "phase": "Discovery",
+      "epic": "Discovery and design",
+      "ref": "R8",
+      "item": "Visual design and responsive design system",
+      "acceptance": "Design tokens, component specs and high-fidelity key screens approved by the distributor.",
+      "engineering_days": 0.0,
+      "design_days": 5.0,
+      "risk_note": "",
+      "id": "E5",
+      "qa_days": 1.0,
+      "delivery_days": 1.0,
+      "total_days": 7.0,
+      "cost_low": 5896.24,
+      "cost_high": 9932.8
+    },
+    {
+      "phase": "Build",
+      "epic": "Foundations",
+      "ref": "R9",
+      "item": "Repository, CI/CD pipeline, agent instructions and test commands",
+      "acceptance": "A pull request runs lint, type check, unit tests and builds; merges to main deploy to staging automatically.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E6",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Foundations",
+      "ref": "R9",
+      "item": "Environments and infrastructure as code (dev, staging, production, managed Postgres, secrets, backups)",
+      "acceptance": "Three environments created from code; a restore from backup is tested once.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E7",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Foundations",
+      "ref": "R1-R7",
+      "item": "Data model and migrations",
+      "acceptance": "Migrations create companies, users, roles, products, prices, orders, lines, invoices, payments, sync mappings and audit tables; seed data loads.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E8",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Foundations",
+      "ref": "R9",
+      "item": "Audit log, error monitoring and structured logging",
+      "acceptance": "Account, role, order and sync changes write audit entries; errors reach the monitoring tool with request context.",
+      "engineering_days": 2.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E9",
+      "qa_days": 0.4,
+      "delivery_days": 0.4,
+      "total_days": 2.8,
+      "cost_low": 2954.496,
+      "cost_high": 4189.12
+    },
+    {
+      "phase": "Build",
+      "epic": "Foundations",
+      "ref": "R8",
+      "item": "UI component library and responsive app shell",
+      "acceptance": "Shared components from the design system render at desktop and phone widths in a component catalog.",
+      "engineering_days": 3.0,
+      "design_days": 1.0,
+      "risk_note": "",
+      "id": "E10",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5610.992,
+      "cost_high": 8270.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Accounts, roles and approvals",
+      "ref": "R1",
+      "item": "Sign-in, password reset and session management",
+      "acceptance": "Users sign in, reset a password and sign out; sessions expire; brute-force attempts are rate-limited.",
+      "engineering_days": 4.0,
+      "design_days": 1.0,
+      "risk_note": "+0.5 day: security hardening of the auth flows.",
+      "id": "E11",
+      "qa_days": 1.0,
+      "delivery_days": 1.0,
+      "total_days": 7.0,
+      "cost_low": 7088.24,
+      "cost_high": 10364.8
+    },
+    {
+      "phase": "Build",
+      "epic": "Accounts, roles and approvals",
+      "ref": "R1",
+      "item": "Company accounts and invitation flow",
+      "acceptance": "A company admin invites a colleague by email with a role; the invite expires; the colleague accepts and lands in the right company.",
+      "engineering_days": 4.0,
+      "design_days": 1.5,
+      "risk_note": "",
+      "id": "E12",
+      "qa_days": 1.1,
+      "delivery_days": 1.1,
+      "total_days": 7.699999999999999,
+      "cost_low": 7677.8640000000005,
+      "cost_high": 11358.08
+    },
+    {
+      "phase": "Build",
+      "epic": "Accounts, roles and approvals",
+      "ref": "R1, R9",
+      "item": "Role-based access control and tenant isolation",
+      "acceptance": "Buyer, approver, viewer, company admin and staff permissions enforced in the API and the database queries; an automated test suite proves no endpoint returns another company's data.",
+      "engineering_days": 6.0,
+      "design_days": 0.0,
+      "risk_note": "+2 days: cross-tenant leakage tests across every endpoint and role combination; a leak here is the worst failure the portal can have.",
+      "id": "E13",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 8863.488000000001,
+      "cost_high": 12567.36
+    },
+    {
+      "phase": "Build",
+      "epic": "Accounts, roles and approvals",
+      "ref": "R2",
+      "item": "Order approval workflow",
+      "acceptance": "Orders above the company limit wait for an approver, who approves or rejects with a comment; buyer and approver are notified; the decision is audited.",
+      "engineering_days": 7.0,
+      "design_days": 2.0,
+      "risk_note": "+2 days: edge cases (limit changed while an order waits, prices change between approval and placement, approver is also the buyer, no approver set, multiple approvers).",
+      "id": "E14",
+      "qa_days": 1.8,
+      "delivery_days": 1.8,
+      "total_days": 12.600000000000001,
+      "cost_low": 12699.232,
+      "cost_high": 18635.039999999997
+    },
+    {
+      "phase": "Build",
+      "epic": "Accounts, roles and approvals",
+      "ref": "R1, R2",
+      "item": "Company admin user management (users, roles, approval limit, deactivation)",
+      "acceptance": "A company admin lists users, changes roles, deactivates a user and sets the approval limit.",
+      "engineering_days": 3.0,
+      "design_days": 1.5,
+      "risk_note": "",
+      "id": "E15",
+      "qa_days": 0.9,
+      "delivery_days": 0.9,
+      "total_days": 6.300000000000001,
+      "cost_low": 6200.616,
+      "cost_high": 9263.52
+    },
+    {
+      "phase": "Build",
+      "epic": "Ordering and reorder",
+      "ref": "R4",
+      "item": "Product catalog with customer prices and stock",
+      "acceptance": "Buyers search and browse synced products and see their price and availability.",
+      "engineering_days": 5.0,
+      "design_days": 2.0,
+      "risk_note": "+1 day: customer-specific pricing may need its own price table if QuickBooks price rules are not reachable through the API.",
+      "id": "E16",
+      "qa_days": 1.4000000000000001,
+      "delivery_days": 1.4000000000000001,
+      "total_days": 9.8,
+      "cost_low": 9744.736,
+      "cost_high": 14445.92
+    },
+    {
+      "phase": "Build",
+      "epic": "Ordering and reorder",
+      "ref": "R4, R2",
+      "item": "Cart and checkout",
+      "acceptance": "A buyer builds a cart, adds a PO number and delivery details, and submits; the order goes to approval or is placed according to the limit.",
+      "engineering_days": 5.0,
+      "design_days": 2.0,
+      "risk_note": "",
+      "id": "E17",
+      "qa_days": 1.4000000000000001,
+      "delivery_days": 1.4000000000000001,
+      "total_days": 9.8,
+      "cost_low": 9744.736,
+      "cost_high": 14445.92
+    },
+    {
+      "phase": "Build",
+      "epic": "Ordering and reorder",
+      "ref": "R3",
+      "item": "Order history with search and filters",
+      "acceptance": "Users list their company's orders, filter by date, status and PO, search by product, and open an order to see its lines.",
+      "engineering_days": 4.0,
+      "design_days": 2.0,
+      "risk_note": "",
+      "id": "E18",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 8267.488000000001,
+      "cost_high": 12351.36
+    },
+    {
+      "phase": "Build",
+      "epic": "Ordering and reorder",
+      "ref": "R4",
+      "item": "One-click reorder with change summary",
+      "acceptance": "Reorder fills the cart from a past order at current prices; the cart flags price changes, out-of-stock and discontinued items before submission.",
+      "engineering_days": 4.0,
+      "design_days": 1.5,
+      "risk_note": "+1 day: discontinued, inactive and partially available items.",
+      "id": "E19",
+      "qa_days": 1.1,
+      "delivery_days": 1.1,
+      "total_days": 7.699999999999999,
+      "cost_low": 7677.8640000000005,
+      "cost_high": 11358.08
+    },
+    {
+      "phase": "Build",
+      "epic": "Ordering and reorder",
+      "ref": "R1, R2, R4, R5",
+      "item": "Email notifications (invites, approvals, order confirmations, payment receipts)",
+      "acceptance": "Each event sends a templated email through the transactional email provider; bounces are logged.",
+      "engineering_days": 3.0,
+      "design_days": 1.0,
+      "risk_note": "",
+      "id": "E20",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5610.992,
+      "cost_high": 8270.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Invoices and Stripe payments",
+      "ref": "R5",
+      "item": "Invoice list and detail",
+      "acceptance": "Users see open and paid invoices with balances and due dates, and download the invoice PDF.",
+      "engineering_days": 3.0,
+      "design_days": 1.5,
+      "risk_note": "",
+      "id": "E21",
+      "qa_days": 0.9,
+      "delivery_days": 0.9,
+      "total_days": 6.300000000000001,
+      "cost_low": 6200.616,
+      "cost_high": 9263.52
+    },
+    {
+      "phase": "Build",
+      "epic": "Invoices and Stripe payments",
+      "ref": "R5",
+      "item": "Card payment of one or several invoices through Stripe",
+      "acceptance": "A user selects invoices and pays by card in Stripe's hosted payment element; card data never reaches the portal; a receipt is shown and emailed.",
+      "engineering_days": 5.0,
+      "design_days": 1.5,
+      "risk_note": "+1 day: invoice balances changing in QuickBooks between selection and payment, and allocation across several invoices.",
+      "id": "E22",
+      "qa_days": 1.3,
+      "delivery_days": 1.3,
+      "total_days": 9.1,
+      "cost_low": 9155.112000000001,
+      "cost_high": 13452.64
+    },
+    {
+      "phase": "Build",
+      "epic": "Invoices and Stripe payments",
+      "ref": "R5",
+      "item": "Stripe webhooks for payment status",
+      "acceptance": "Signed webhooks update payment status idempotently; replayed and out-of-order events leave the same final state; failures retry.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: idempotency, event ordering and failed or disputed payments.",
+      "id": "E23",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6",
+      "item": "QuickBooks OAuth connection, token rotation and production app approval",
+      "acceptance": "Staff connect the QuickBooks company from the back office; tokens are stored encrypted and refreshed automatically; an expired connection alerts staff.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: Intuit production-key review and refresh-token rotation and expiry handling.",
+      "id": "E24",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6",
+      "item": "Sync engine: job queue, change data capture and webhooks, idempotency, rate limits, retries, sync log",
+      "acceptance": "Changes on either side are picked up within minutes; every API write carries an idempotency key; throttling responses back off and retry; every sync action is logged.",
+      "engineering_days": 8.0,
+      "design_days": 0.0,
+      "risk_note": "+2 days: QuickBooks throttling and concurrency limits, missed webhooks covered by change-data-capture polling, retry storms.",
+      "id": "E25",
+      "qa_days": 1.6,
+      "delivery_days": 1.6,
+      "total_days": 11.2,
+      "cost_low": 11817.984,
+      "cost_high": 16756.48
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6",
+      "item": "Customer mapping and two-way customer sync",
+      "acceptance": "Each portal company links to one QuickBooks customer; contact changes flow both ways; unmatched or duplicate customers are queued for staff.",
+      "engineering_days": 6.0,
+      "design_days": 0.0,
+      "risk_note": "+1.5 days: matching existing QuickBooks customers, sub-customers and duplicates.",
+      "id": "E26",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 8863.488000000001,
+      "cost_high": 12567.36
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6, R4",
+      "item": "Products, prices and stock sync from QuickBooks",
+      "acceptance": "Items, prices and quantities on hand appear in the portal; inactive items are hidden; changes appear within minutes.",
+      "engineering_days": 5.0,
+      "design_days": 0.0,
+      "risk_note": "+1.5 days: price rules and customer-specific prices that the API may not expose; inventory quantities only on some QuickBooks plans.",
+      "id": "E27",
+      "qa_days": 1.0,
+      "delivery_days": 1.0,
+      "total_days": 7.0,
+      "cost_low": 7386.24,
+      "cost_high": 10472.8
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6",
+      "item": "Portal orders to QuickBooks invoices",
+      "acceptance": "A placed order creates exactly one QuickBooks invoice with the right customer, lines, terms and tax; validation errors are surfaced to staff.",
+      "engineering_days": 6.0,
+      "design_days": 0.0,
+      "risk_note": "+1.5 days: sales tax setup (automated sales tax, exemptions), terms and duplicate-prevention on retries.",
+      "id": "E28",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 8863.488000000001,
+      "cost_high": 12567.36
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6, R5",
+      "item": "Invoices and payments from QuickBooks to the portal",
+      "acceptance": "Invoices, edits, voids, credit memos applied and payments recorded in QuickBooks show in the portal with correct balances.",
+      "engineering_days": 5.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: voided, deleted and edited invoices, and payments applied across several invoices.",
+      "id": "E29",
+      "qa_days": 1.0,
+      "delivery_days": 1.0,
+      "total_days": 7.0,
+      "cost_low": 7386.24,
+      "cost_high": 10472.8
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6, R5",
+      "item": "Stripe payments recorded in QuickBooks",
+      "acceptance": "A successful Stripe payment creates one QuickBooks payment applied to the paid invoices, in the agreed deposit account, with fees handled as agreed.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: deposit and fee accounting choices and idempotency against webhook replays.",
+      "id": "E30",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6, R7",
+      "item": "Conflict detection and staff resolution",
+      "acceptance": "When both sides changed the same record since the last sync, the change is held, staff see a field-level diff and choose which side wins; nothing is overwritten silently.",
+      "engineering_days": 7.0,
+      "design_days": 1.5,
+      "risk_note": "+2 days: field-level change tracking against the last synced version, and conflicts on records with dependent lines.",
+      "id": "E31",
+      "qa_days": 1.7000000000000002,
+      "delivery_days": 1.7000000000000002,
+      "total_days": 11.899999999999999,
+      "cost_low": 12109.608,
+      "cost_high": 17641.76
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6",
+      "item": "Reconciliation job and mismatch report",
+      "acceptance": "A nightly job compares customers, open invoices and payments between the portal and QuickBooks and alerts staff to any mismatch.",
+      "engineering_days": 4.0,
+      "design_days": 0.5,
+      "risk_note": "+1 day: defining tolerances and handling records created outside the portal.",
+      "id": "E32",
+      "qa_days": 0.9,
+      "delivery_days": 0.9,
+      "total_days": 6.300000000000001,
+      "cost_low": 6498.616,
+      "cost_high": 9371.52
+    },
+    {
+      "phase": "Build",
+      "epic": "QuickBooks Online sync",
+      "ref": "R6, R1",
+      "item": "Initial data load and customer onboarding",
+      "acceptance": "Customers, products and open invoices load from QuickBooks in a rehearsed dry run; companies link to customers; first admins are invited in batches.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: dry runs against a copy of the real company file and cleanup of bad source data.",
+      "id": "E33",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Staff back office",
+      "ref": "R7",
+      "item": "Back office shell and staff roles",
+      "acceptance": "Staff sign in to a separate back office area; staff permissions are enforced and audited.",
+      "engineering_days": 2.0,
+      "design_days": 1.0,
+      "risk_note": "",
+      "id": "E34",
+      "qa_days": 0.6000000000000001,
+      "delivery_days": 0.6000000000000001,
+      "total_days": 4.2,
+      "cost_low": 4133.744000000001,
+      "cost_high": 6175.68
+    },
+    {
+      "phase": "Build",
+      "epic": "Staff back office",
+      "ref": "R7",
+      "item": "Manage customer companies and users",
+      "acceptance": "Staff create and edit companies, link them to QuickBooks customers, and manage their users and roles.",
+      "engineering_days": 4.0,
+      "design_days": 1.5,
+      "risk_note": "",
+      "id": "E35",
+      "qa_days": 1.1,
+      "delivery_days": 1.1,
+      "total_days": 7.699999999999999,
+      "cost_low": 7677.8640000000005,
+      "cost_high": 11358.08
+    },
+    {
+      "phase": "Build",
+      "epic": "Staff back office",
+      "ref": "R7, R6",
+      "item": "Order administration (view, edit, cancel)",
+      "acceptance": "Staff view and edit orders; an edit to an order already invoiced updates the QuickBooks invoice or raises a conflict.",
+      "engineering_days": 5.0,
+      "design_days": 1.5,
+      "risk_note": "+1 day: editing orders that have already become QuickBooks invoices.",
+      "id": "E36",
+      "qa_days": 1.3,
+      "delivery_days": 1.3,
+      "total_days": 9.1,
+      "cost_low": 9155.112000000001,
+      "cost_high": 13452.64
+    },
+    {
+      "phase": "Build",
+      "epic": "Staff back office",
+      "ref": "R7, R6",
+      "item": "Sync log viewer",
+      "acceptance": "Staff filter the sync log by entity, status and date, and retry a failed sync.",
+      "engineering_days": 3.0,
+      "design_days": 1.0,
+      "risk_note": "",
+      "id": "E37",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5610.992,
+      "cost_high": 8270.24
+    },
+    {
+      "phase": "Build",
+      "epic": "Staff back office",
+      "ref": "R7, R5",
+      "item": "Payments view",
+      "acceptance": "Staff list payments with status, invoices covered and a link to the Stripe record.",
+      "engineering_days": 2.0,
+      "design_days": 0.5,
+      "risk_note": "",
+      "id": "E38",
+      "qa_days": 0.5,
+      "delivery_days": 0.5,
+      "total_days": 3.5,
+      "cost_low": 3544.12,
+      "cost_high": 5182.4
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R5, R6",
+      "item": "Integration test suite against the QuickBooks sandbox and Stripe test mode",
+      "acceptance": "Automated end-to-end tests cover order to invoice, payment to QuickBooks, QuickBooks edits to portal and a conflict, and run in CI.",
+      "engineering_days": 6.0,
+      "design_days": 0.0,
+      "risk_note": "+1 day: sandbox fixtures and flaky third-party calls.",
+      "id": "E39",
+      "qa_days": 1.2000000000000002,
+      "delivery_days": 1.2000000000000002,
+      "total_days": 8.4,
+      "cost_low": 8863.488000000001,
+      "cost_high": 12567.36
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R1, R5, R9",
+      "item": "Security review and hardening",
+      "acceptance": "Authorization tests, dependency and secret scanning pass; OWASP top-ten review findings fixed; rate limits on public endpoints.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E40",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R9",
+      "item": "Performance and load check",
+      "acceptance": "Order history and catalog respond within agreed limits with production-sized data; a load test at peak usage passes.",
+      "engineering_days": 2.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E41",
+      "qa_days": 0.4,
+      "delivery_days": 0.4,
+      "total_days": 2.8,
+      "cost_low": 2954.496,
+      "cost_high": 4189.12
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R8",
+      "item": "Responsive, cross-browser and accessibility pass",
+      "acceptance": "Key flows pass on current desktop and phone browsers and an automated accessibility check; issues fixed.",
+      "engineering_days": 3.0,
+      "design_days": 1.0,
+      "risk_note": "",
+      "id": "E42",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5610.992,
+      "cost_high": 8270.24
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R1-R8",
+      "item": "User acceptance testing support and feedback rework round",
+      "acceptance": "The distributor's staff and a pilot group of customers test the portal; agreed feedback is fixed and re-verified.",
+      "engineering_days": 8.0,
+      "design_days": 2.0,
+      "risk_note": "",
+      "id": "E43",
+      "qa_days": 2.0,
+      "delivery_days": 2.0,
+      "total_days": 14.0,
+      "cost_low": 14176.48,
+      "cost_high": 20729.6
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R6, R9",
+      "item": "Release hardening and production cutover",
+      "acceptance": "Production QuickBooks connection and Stripe live keys in place, data loaded, alerts and runbooks ready, rollback rehearsed.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E44",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R7, R9",
+      "item": "Documentation and handover",
+      "acceptance": "Architecture notes, runbooks and a staff admin guide delivered and walked through.",
+      "engineering_days": 2.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E45",
+      "qa_days": 0.4,
+      "delivery_days": 0.4,
+      "total_days": 2.8,
+      "cost_low": 2954.496,
+      "cost_high": 4189.12
+    },
+    {
+      "phase": "Launch",
+      "epic": "Quality and launch",
+      "ref": "R1-R9",
+      "item": "Post-launch hypercare (two weeks)",
+      "acceptance": "Production issues in the first two weeks are triaged and fixed; sync and payment monitoring reviewed daily.",
+      "engineering_days": 4.0,
+      "design_days": 0.0,
+      "risk_note": "",
+      "id": "E46",
+      "qa_days": 0.8,
+      "delivery_days": 0.8,
+      "total_days": 5.6,
+      "cost_low": 5908.992,
+      "cost_high": 8378.24
+    }
+  ],
+  "totals": {
+    "days": {
+      "engineering": 186.0,
+      "design": 42.0,
+      "qa": 45.6,
+      "delivery": 45.6,
+      "total": 319.2
+    },
+    "regions": [
+      {
+        "name": "United States",
+        "low": 324296.544,
+        "mid": 398660.11199999996,
+        "high": 473023.67999999993,
+        "team_low": 297706.08,
+        "team_high": 435321.6,
+        "gap": -0.0806357873094663
+      },
+      {
+        "name": "Latin America",
+        "low": 131606.4,
+        "mid": 154459.2,
+        "high": 177312.0,
+        "team_low": 120288.0,
+        "team_high": 162624.0,
+        "gap": -0.08418533826408536
+      },
+      {
+        "name": "Eastern Europe",
+        "low": 121248.0,
+        "mid": 169147.2,
+        "high": 217046.4,
+        "team_low": 110880.0,
+        "team_high": 200256.0,
+        "gap": -0.08028037117965892
+      }
+    ]
+  }
+}
