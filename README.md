@@ -10,6 +10,8 @@ Three free Claude skills that estimate what custom software costs to build, the 
 
 Software development cost is the effort the work needs, counted in days per discipline (engineering, design, QA, delivery management), multiplied by the rates of the people doing it. The skills run that formula on your project. Claude runs the method; it does not supply the judgment, and it does not know what you have not written down. The open-questions list is the part to take to a vendor.
 
+The method behind the skills, with the savings table, the rate sources and the worked example explained step by step, is written up in [Software Development Cost: Estimate It With Claude or ChatGPT](https://leanware.co/insights/software-development-cost).
+
 ## Install
 
 **Claude Code**
